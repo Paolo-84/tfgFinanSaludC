@@ -19,7 +19,7 @@ public class EmailService {
         helper.setTo(to);
         helper.setSubject("Confirma tu correo electrónico");
 
-        String htmlContent = """
+        String htmlContent = String.format("""
         <!DOCTYPE html>
         <html lang="es">
         <head>
@@ -48,7 +48,7 @@ public class EmailService {
                                                 <table role="presentation" border="0" cellspacing="0" cellpadding="0">
                                                     <tr>
                                                         <td align="center" style="border-radius: 50px; background-color: #10b981;">
-                                                            <a href="http://localhost:8080/api/auth/verify?token=%s" target="_blank" style="display: inline-block; padding: 15px 30px; font-size: 16px; color: #ffffff; text-decoration: none; font-weight: bold;">Verificar mi correo</a>
+                                                            <a href="https://finan-salud-front.vercel.app/verify?token=%s" target="_blank" style="display: inline-block; padding: 15px 30px; font-size: 16px; color: #ffffff; text-decoration: none; font-weight: bold;">Verificar mi correo</a>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -73,7 +73,7 @@ public class EmailService {
             </table>
         </body>
         </html>
-        """; // Usamos el mismo token como código por ahora
+        """, token); // Usamos el mismo token como código por ahora
 
         helper.setText(htmlContent, true); // `true` indica que es HTML
 

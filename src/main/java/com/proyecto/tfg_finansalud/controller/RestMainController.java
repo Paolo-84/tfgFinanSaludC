@@ -105,18 +105,6 @@ public class RestMainController {
                         .body(Map.of("error", "Error al obtener el usuario: " + e.getMessage()));
             }
         }
-        @GetMapping("/uploads/profile-pics/{imageURL}")
-        public ResponseEntity<?> getImage(@PathVariable("imageURL") String URLfile) {
-            try {
-                MultipartFile filee = userService.getProfileImageAsMultipartFile(URLfile);
-
-                return ResponseEntity.ok(Map.of("success", true, "image", filee));
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(Map.of("success", false, "message", "Error al cargar la imagen: " + e.getMessage()));
-            }
-
-        }
     }
     @PostMapping("/user/upload-profile-pic")
     public ResponseEntity<?> uploadProfilePic(@RequestParam("file") MultipartFile file) {

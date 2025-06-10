@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -236,5 +237,17 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         user.setEmail(newEmail);
         userRepository.save(user);
+    }
+
+    public MultipartFile getProfileImageAsMultipartFile(String fileName) throws IOException {
+        Path filePath = Paths.get("uploads/profile-pics", fileName);
+        byte[] fileContent = Files.readAllBytes(filePath);
+
+        return new MockMultipartFile(
+                fileName, // Original file name
+                fileName, // File name in the request
+                Files.probeContentType(filePath), // Content type
+                fileContent // File content
+        );
     }
 }
